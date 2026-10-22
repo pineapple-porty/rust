@@ -2,6 +2,21 @@
 
 The language of the future.
 
+## Project implementation
+
+The project is intended to be implemented in Rust. The service center,
+runtime manager, and runtime are planned Rust components that work together
+to run Urk programs. Rust is the implementation language for the tools and
+runtime, not the language users write their programs in: Urk source files use
+Urk syntax, and the runtime is intended to execute bytecode produced from that
+source.
+
+The repository currently contains the Rust package in
+[`lang_prj/`](../lang_prj/), with its Cargo manifest and source under that
+directory. The three named programs below describe the planned execution
+flow; they are not yet three implemented executables. As the project grows,
+keep Rust source and Cargo manifests in the relevant crate directories.
+
 ## How Urk code runs
 
 Urk uses three programs to run a source program:
@@ -39,5 +54,8 @@ translates the source into that representation.
 
 When implementing or changing the language, preserve this distinction:
 source-code processing belongs before runtime execution, and the runtime
-consumes bytecode. Do not assume details of the bytecode format or the
-communication between the three programs unless they are specified elsewhere.
+consumes bytecode. The version 1 bytecode module format and runtime behavior
+are documented in [runtime.md](./runtime.md). The source-language rules and
+implementation requirements are documented in [syntax.md](./syntax.md). The
+service center's communication with the runtime manager remains unspecified
+and must be designed before those programs can be integrated end to end.
